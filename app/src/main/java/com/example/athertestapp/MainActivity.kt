@@ -46,12 +46,67 @@ class MainActivity : AppCompatActivity() {
         grid = findViewById(R.id.grid_view) as GridView
 
         intializeGrid()
+
+        grid!!.setOnTouchListener(object : OnSwipeTouchListener(this@MainActivity) {
+            override fun onSwipeTop() {
+                prevmap = HashMap(map)
+
+
+                for (i in 16 downTo 5) {
+                    if (map[i.toString() + ""] == map[(i - 4).toString() + ""]) {
+//                           Log.i("TAG", map.get(j + "") + map.get((j - 4) + "") + "");
+                        map[(i - 4).toString() + ""] =
+                            map[i.toString() + ""]!! + map[(i - 4).toString() + ""]!!
+                        map[i.toString() + ""] = 0
+                        val score = t!!.text.toString()
+                        var scorenumber = score.toInt()
+                        scorenumber += map[(i - 4).toString() + ""]!!
+                        t!!.text = scorenumber.toString() + ""
+                    } else if (map[(i - 4).toString() + ""] == 0) {
+//                           Log.i("TAG", "YES");
+                        map[(i - 4).toString() + ""] = map[i.toString() + ""]!!
+                        map[i.toString() + ""] = 0
+                    }
+                }
+
+                gridChanged(plantsList)
+                generateRandomNumber()
+            }
+
+            override fun onSwipeBottom() {
+                prevmap = HashMap(map)
+
+
+
+                for (i in 1..12) {
+                    if (map[i.toString() + ""] == map[(i + 4).toString() + ""]) {
+//                           Log.i("TAG", map.get(j + "") + map.get((j + 4) + "") + "");
+                        map[(i + 4).toString() + ""] =
+                            map[i.toString() + ""]!! + map[(i + 4).toString() + ""]!!
+                        map[i.toString() + ""] = 0
+                        val score = t!!.text.toString()
+                        var scorenumber = score.toInt()
+                        scorenumber += map[(i + 4).toString() + ""]!!
+                        t!!.text = scorenumber.toString() + ""
+                    } else if (map[(i + 4).toString() + ""] == 0) {
+//                           Log.i("TAG", "YES");
+                        map[(i + 4).toString() + ""] = map[i.toString() + ""]!!
+                        map[i.toString() + ""] = 0
+                    }
+                }
+
+
+                gridChanged(plantsList)
+                generateRandomNumber()
+            }
+        })
+
     }
     private fun intializeGrid() {
         val random1 = Random()
-        val r1 = random1.nextInt(16 - 1 + 1) + 1
+        val r1 = random1.nextInt(16 ) + 1
         val random2 = Random()
-        var r2 = random2.nextInt(16 - 1 + 1) + 1
+        var r2 = random2.nextInt(16 ) + 1
         if (r1 == r2) {
             if (r2 != 16) r2++ else r2--
         }
@@ -78,6 +133,28 @@ class MainActivity : AppCompatActivity() {
 
         // Data bind GridView with ArrayAdapter (String Array elements)
         gridChanged(plantsList)
+    }
+    fun generateRandomNumber() {
+        val ran = Random()
+        var i = ran.nextInt(16) + 1
+        Log.i("TAG1", map.toString())
+        var flag = 0
+        for (key in map.keys) {
+            if (map[key] != 0) {
+                flag++
+            }
+        }
+        if (flag != 16) {
+            while (map[i.toString() + ""] != 0) {
+                i = ran.nextInt(16) + 1
+            }
+            val choice = intArrayOf(2, 4)
+            val ind1 = ran.nextInt(choice.size)
+            Log.i("TAG1", choice[ind1].toString() + "    " + i)
+            map[i.toString() + ""] = choice[ind1]
+            Log.i("TAG1", map.toString())
+            gridChanged(plantsList)
+        }
     }
     fun gridChanged(plantsList: List<String>) {
         grid!!.adapter = object : ArrayAdapter<String?>(this, android.R.layout.simple_list_item_1, plantsList) {

@@ -7,7 +7,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
 
-class OnSwipeTouchListener(ctx: Context?) : OnTouchListener {
+open class OnSwipeTouchListener(ctx: Context?) : OnTouchListener {
     private val gestureDetector: GestureDetector
 
     companion object {
@@ -66,8 +66,8 @@ class OnSwipeTouchListener(ctx: Context?) : OnTouchListener {
 
     fun onSwipeRight() {}
     fun onSwipeLeft() {}
-    fun onSwipeTop() {}
-    fun onSwipeBottom() {}
+    open fun onSwipeTop() {}
+    open fun onSwipeBottom() {}
 
     init {
         gestureDetector =
