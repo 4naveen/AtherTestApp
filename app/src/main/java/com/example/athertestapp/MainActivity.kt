@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     var grid: GridView? = null
     var score = 0
     var t: TextView? = null
-    var nums = arrayOf(
+    var position = arrayOf(
         "1",
         "2",
         "3",
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         "15",
         "16"
     )
-    var plantsList = Arrays.asList(*nums)
+    var plantsList = Arrays.asList(*position)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -117,15 +117,15 @@ class MainActivity : AppCompatActivity() {
         val ind2 = Random().nextInt(choice.size)
 
 //        Log.i("TAG",choice[ind1]+"     "+choice[ind2]);
-        for (i in nums.indices) {
-            if (nums[i].toInt() == r1) {
-                map[nums[i]] = choice[ind1]
+        for (i in position.indices) {
+            if (position[i].toInt() == r1) {
+                map[position[i]] = choice[ind1]
             }
-            if (nums[i].toInt() == r2) {
-                map[nums[i]] = choice[ind2]
+            if (position[i].toInt() == r2) {
+                map[position[i]] = choice[ind2]
             }
-            if (nums[i].toInt() != r2 && nums[i].toInt() != r1) {
-                map[nums[i]] = 0
+            if (position[i].toInt() != r2 && position[i].toInt() != r1) {
+                map[position[i]] = 0
             }
         }
         //        Log.i("TAG",map.toString());
@@ -158,11 +158,7 @@ class MainActivity : AppCompatActivity() {
     }
     fun gridChanged(plantsList: List<String>) {
         grid!!.adapter = object : ArrayAdapter<String?>(this, android.R.layout.simple_list_item_1, plantsList) {
-            override fun getView(
-                position: Int,
-                convertView: View?,
-                parent: ViewGroup
-            ): View {
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
                 // Return the GridView current item as a View
                 val view = super.getView(position, convertView, parent)
