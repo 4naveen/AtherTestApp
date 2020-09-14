@@ -6,10 +6,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.GridView
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 
@@ -67,6 +64,7 @@ class MainActivity : AppCompatActivity() {
 
                 gridChanged(positionList)
                 generateRandomNumber()
+                  checkSwipe()
             }
 
             override fun onSwipeBottom() {
@@ -89,11 +87,12 @@ class MainActivity : AppCompatActivity() {
 
                 gridChanged(positionList)
                 generateRandomNumber()
+                checkSwipe()
             }
             override fun onSwipeRight() {
-
+                var k = 0
                 for (i in 1..16) {
-                    if ( map[i.toString() + ""] == map[(i + 1).toString() + ""]) {
+                    if (k == 0 && map[i.toString() + ""] == map[(i + 1).toString() + ""]) {
                         map[(i + 1).toString() + ""] =
                             map[i.toString() + ""]!! + map[(i + 1).toString() + ""]!!
                         map[i.toString() + ""] = 0
@@ -101,20 +100,29 @@ class MainActivity : AppCompatActivity() {
                         var scorenumber = score.toInt()
                         scorenumber += map[(i + 1).toString() + ""]!!
                         t!!.text = scorenumber.toString() + ""
-                    } else if ( map[(i + 1).toString() + ""] == 0) {
+                    } else if ( k == 0 && map[(i + 1).toString() + ""] == 0) {
                         map[(i + 1).toString() + ""] = map[i.toString() + ""]!!
                         map[i.toString() + ""] = 0
                     }
-
+                    if (i / 4 != (i + 1) / 4) {
+                        k = 1
+                    } else {
+                        k = 0
+                    }
                 }
                 gridChanged(positionList)
                 generateRandomNumber()
+                checkSwipe()
             }
             override fun onSwipeLeft() {
-
+              var k=0
                 for (i in 16 downTo 2) {
-
-                    if (map[i.toString() + ""] == map[(i - 1).toString() + ""]) {
+                    if (i == 13 || i == 9 || i == 5) {
+                        k = 1
+                    } else {
+                        k = 0
+                    }
+                    if (k == 0 && map[i.toString() + ""] == map[(i - 1).toString() + ""]) {
                         map[(i - 1).toString() + ""] =
                             map[i.toString() + ""]!! + map[(i - 1).toString() + ""]!!
                         map[i.toString() + ""] = 0
@@ -122,7 +130,7 @@ class MainActivity : AppCompatActivity() {
                         var scorenumber = score.toInt()
                         scorenumber += map[(i - 1).toString() + ""]!!
                         t!!.text = scorenumber.toString() + ""
-                    } else if ( map[(i - 1).toString() + ""] == 0) {
+                    } else if ( k == 0 && map[(i - 1).toString() + ""] == 0) {
                         map[(i - 1).toString() + ""] = map[i.toString() + ""]!!
                         map[i.toString() + ""] = 0
                     }
@@ -130,6 +138,7 @@ class MainActivity : AppCompatActivity() {
 
                 gridChanged(positionList)
                 generateRandomNumber()
+                checkSwipe()
             }
 
         })
@@ -176,7 +185,7 @@ class MainActivity : AppCompatActivity() {
         if (flag != 16) { while (map[i.toString() + ""] != 0) {
                 i = ran.nextInt(16) + 1
             }
-            val choice = intArrayOf(2, 4)
+            val choice = intArrayOf(2,4,8,16,32,64)
             val ind1 = ran.nextInt(choice.size)
             map[i.toString() + ""] = choice[ind1]
             gridChanged(positionList)
@@ -222,5 +231,25 @@ class MainActivity : AppCompatActivity() {
                 return tv
             }
         }
+    }
+    fun checkSwipe() {
+        var flag = 0
+        for (key in map.keys) {
+            if (map[key] == 2048) {
+                Toast.makeText(applicationContext,"CONGRATULATIONS! YOU WIN!",Toast.LENGTH_LONG).show()
+                return
+            }else{
+                if (map[key]!=0){
+                    flag++
+                    if (flag==16){
+                        Toast.makeText(applicationContext,"GAME OVER! YOU LOSE!",Toast.LENGTH_LONG).show()
+                        return
+                    }
+
+                }
+            }
+
+        }
+
     }
 }
