@@ -14,7 +14,7 @@
         android:layout_height="45dp"
         android:background="#d7ccc8"
         android:gravity="center"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         tools:ignore="MissingConstraints">
         <TextView
             android:layout_gravity="start"
@@ -23,9 +23,10 @@
             android:layout_height="match_parent"
             android:text="Score : "/>
         <TextView
-            android:layout_gravity="end"
+            android:layout_gravity="start"
             android:layout_width="50dp"
             android:id="@+id/Score"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_height="match_parent"
             android:text="0000"/>
     </LinearLayout>
