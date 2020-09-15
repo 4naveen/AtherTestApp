@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 
                 gridChanged(positionList)
                 generateRandomNumber()
-                  checkSwipe()
+                checkGrid()
             }
 
             override fun onSwipeBottom() {
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
 
                 gridChanged(positionList)
                 generateRandomNumber()
-                checkSwipe()
+                checkGrid()
             }
             override fun onSwipeRight() {
                 var k = 0
@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 gridChanged(positionList)
                 generateRandomNumber()
-                checkSwipe()
+                checkGrid()
             }
             override fun onSwipeLeft() {
               var k=0
@@ -138,7 +138,7 @@ class MainActivity : AppCompatActivity() {
 
                 gridChanged(positionList)
                 generateRandomNumber()
-                checkSwipe()
+                checkGrid()
             }
 
         })
@@ -185,7 +185,7 @@ class MainActivity : AppCompatActivity() {
         if (flag != 16) { while (map[i.toString() + ""] != 0) {
                 i = ran.nextInt(16) + 1
             }
-            val choice = intArrayOf(2,4,8,16,32,64)
+            val choice = intArrayOf(2,4)
             val ind1 = ran.nextInt(choice.size)
             map[i.toString() + ""] = choice[ind1]
             gridChanged(positionList)
@@ -225,14 +225,14 @@ class MainActivity : AppCompatActivity() {
                 tv.id = position
 
                 // Set the TextView background color
-                tv.setBackgroundColor(Color.parseColor("#b2dfdb"))
+                tv.setBackgroundColor(Color.parseColor("#89ECDA"))
 
                 // Return the TextView widget as GridView item
                 return tv
             }
         }
     }
-    fun checkSwipe() {
+    fun checkGrid() {
         var flag = 0
         for (key in map.keys) {
             if (map[key] == 2048) {
