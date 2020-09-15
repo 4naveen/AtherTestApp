@@ -236,7 +236,7 @@ class MainActivity : AppCompatActivity() {
         var flag = 0
         for (key in map.keys) {
             if (map[key] == 2048) {
-                Toast.makeText(applicationContext,"CONGRATULATIONS! YOU WIN!",Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext,"CONGRATULATIONS! YOU HAVE WON!",Toast.LENGTH_LONG).show()
                 return
             }else{
                 if (map[key]!=0){
